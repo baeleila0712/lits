@@ -1,3 +1,6 @@
+import nibabel as nib
+from scipy import ndimage
+
 def read_nifti_file(filepath):
     """Read and load volume"""
     scan = nib.load(filepath)
@@ -66,3 +69,18 @@ def process_mask(path):
     mask = read_nifti_file(path)
     mask = resize_volume(mask)   
     return mask
+
+
+if __name__ == '__main__':
+
+    # create training data
+    vol_scans = np.array([process_scan(path) for path in sorted(train_path_list)])
+    mask_scans = np.array([process_mask(path) for path in sorted(mask_path_list)])
+
+
+# Split data for training and validation. 
+x_train = np.concatenate((vol_scans[:105]), axis=0)
+y_train = np.concatenate((mask_scans[:105]), axis=0)
+x_val = np.concatenate((vol_scans[105:]), axis=0)
+y_val = np.concatenate((mask_scans[105:]), axis=0)
+print('All data had transferred')
