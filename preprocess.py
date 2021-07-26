@@ -10,7 +10,7 @@ def read_nifti_file(filepath):
 
 def normalize(volume):
     """Normalize the volume 0-255"""
-    min = -1000
+    min = -100
     max = 400
     volume[volume < min] = min
     volume[volume > max] = max
